@@ -2,47 +2,75 @@
 #include <random>
 using namespace std;
 
+// Defining the MinHeap class
+// Note: This MinHeap is indexed from 1 (as mentioned in section) 
 class MinHeap {
-    public:
-        std::vector<double> heap;
+public:
+    vector<double> heap;
 
-        int size() {return heap.size();}
+    // ----- Constructors -----
+    // Default 
+    MinHeap() {
+        // Inserting dummy value at index 0 to make indexing from 1
+        heap.push_back(0);
+    }
+    // With vector
+    MinHeap(vector<double> &vec) {
+        heap.push_back(0); // dummy value
+        for (double val : vec) {
+            heap.push_back(val);
+        }
+        buildMinHeap();
+    }
 
-        MinHeap(std::vector<double> &heap);
-        void minHeapify(int);
-        void buildMinHeap(std::vector<double>);
-        void insert(double);
-        void extractMin();
+    // ----- Member Functions -----
+    int size(); 
+    void minHeapify(int);
+    void buildMinHeap(); 
+    double deleteMin();
+    void insert(int);
 };
 
-// N is the index of the node we are heapifying 
-void MinHeap::minHeapify(int N){
-    int smallest = N;
-    int left = 2 * N;
-    int right = 2 * N + 1;
 
-    if (left && heap[left] < heap[N])
+// Size of the heap
+int MinHeap::size() { return heap.size() - 1; };
+
+// Heapify function
+// Note: i is the index of the node we are heapifying 
+void MinHeap::minHeapify(int i){
+    int left = 2 * i;
+    int right = 2 * i + 1;
+    int smallest = i;
+
+    if (left && heap[left] < heap[i])
         smallest = left;
     else
-        smallest = N;
+        smallest = i;
     if (right && heap[right] < heap[smallest])
         smallest = right;
-    if (smallest != N){
-        std::swap(heap[N], heap[smallest]);
+    if (smallest != i){
+        swap(heap[i], heap[smallest]);
         minHeapify(smallest);
     }
 }
 
-void MinHeap::buildMinHeap(std::vector<double> heap){
-    for (int i = heap.size() / 2; i > 1; i--){
+void MinHeap::buildMinHeap() {
+    for (int i = size() / 2; i >= 1; i--) {
         minHeapify(i);
     }
 }
 
-void Insert(std::vector<double> &heap, int v){
+double MinHeap::deleteMin() {
+    double min = heap[1];
+    heap[1] = heap[size()];
+    heap.pop_back();
+    minHeapify(1);
+    return min;
+}
+
+// MAY NEED TO FIX THIS FUNCTION TO MAKE SURE THAT WE ARE INDEXING FROM 1
+void MinHeap::insert(int v) {
     heap.push_back(v);
     int i = heap.size() - 1;
     heap[i] = v;
 }
-
-
