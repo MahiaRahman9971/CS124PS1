@@ -2,12 +2,6 @@
 #include <random>
 using namespace std;
 
-
-void generateGraph(int n)
-{
-    
-}
-
 // Defining a function that generates random coordinates in the form of a vector containing n vectors
 std::vector<std::vector<double>> randomCoords(int n, int d) {
     std::vector<std::vector<double>> tuples;
@@ -55,9 +49,7 @@ std::vector<std::vector<double>> EW(std::vector<std::vector<double>> tuples) {
             adj[j][i] = distance;
         }
     }
+    // unordered_map < int, string > hashmap;
     return adj;
 }
-
-
-
 
