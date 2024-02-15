@@ -1,5 +1,7 @@
 #include <iostream>
 #include <random>
+#include "helpers.h"
+
 using namespace std;
 
 // Defining a function that generates random coordinates in the form of a vector containing n vectors
@@ -32,7 +34,7 @@ vector<vector<double>> randomCoords(int n, int d) {
 // Defining a function that calculates the distance between two points
 // input: (RC1, RC2) - two tuples of coordinates
 // output: Eculedian distance between each two points
-double ComputeEC(vector<double> coord1, vector<double> coord2) {
+double computeEC(vector<double> coord1, vector<double> coord2) {
     double sum = 0.0;
     for (size_t i = 0; i < coord1.size(); i++) {
         sum += pow(coord2[i] - coord1[i], 2);
