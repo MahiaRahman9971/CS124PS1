@@ -39,7 +39,7 @@ double Prims(vector<vector<double>> RC) {
                 for (int vv = vu + 1; vv < size; vv++) {
                     // If vv not in s
                     if (find(s.begin(), s.end(), vv) == s.end()) {
-                        int weight = ComputeEC(RC[vu], RC[vv]);
+                        int weight = computeEC(RC[vu], RC[vv]);
                         if (d[vv] > weight) {
                             d[vv] = weight;
                             prev[vv] = u;

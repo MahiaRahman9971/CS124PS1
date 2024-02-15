@@ -19,7 +19,7 @@ class MinHeap {
         void minHeapify(int i);
         void buildMinHeap();
         void insert(double n);
-        void deleteMin();
+        double deleteMin();
 };
 
 // mst.cpp
