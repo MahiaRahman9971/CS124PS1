@@ -6,6 +6,7 @@ using namespace std;
 
 vector<int> distance; 
 vector<int> prev;
+int totalWeight = 0;
 
 // Function to calculate the minimum spanning tree using Prim's algorithm
 // input: list of tuples of coordinates
@@ -22,8 +23,10 @@ double Prims(vector<vector<double>> RC) {
 
         // Starting our MST from the first vertex
         d[0] = 0;
-        prev[0] = NULL;
-        h.insert((0, 0));
+        //we don't really need null, and it causing issues with int being set to null
+        // we can solve by making prev a vector of pointers but we don't need to know prevs
+        // prev[0] = NULL;
+        h.insert({0, 0.0});
 
 
         while (h.size() != 0) {
@@ -34,26 +37,25 @@ double Prims(vector<vector<double>> RC) {
             s.push_back(u);
 
             // For every vertex in our graph
-            for (int vu = 0; vu < size; vu++) {
-                // For every vertex after vu in our graph
-                for (int vv = vu + 1; vv < size; vv++) {
-                    // If vv not in s
-                    if (find(s.begin(), s.end(), vv) == s.end()) {
-                        int weight = computeEC(RC[vu], RC[vv]);
-                        if (d[vv] > weight) {
-                            d[vv] = weight;
-                            prev[vv] = u;
-                            h.insert((vv, d[vv]));
+            for (int u = 0; u < size; u++) {
+                // For every vertex after u in our graph
+                for (int v = u + 1; v < size - 1; v++) {
+                    // If v not in s
+                    if (find(s.begin(), s.end(), v) == s.end()) {
+                        int weight = computeEC(RC[u], RC[v]);
+                        if (d[v] > weight) {
+                            d[v] = weight;
+                            // prev[v] = u;
+                            h.insert({v, d[v]});
                         };
                     }
                 }
             }
 
             // Calculate the total weight of the MST
-            int totalWeight = 0;
             for (int i = 0; i < size; i++) {
                 totalWeight += d[i];
-            }
-            return totalWeight;
+            }  
         }
+        return totalWeight;
     }

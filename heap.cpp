@@ -1,54 +1,51 @@
 #include <iostream>
-#include <random>
+#include <vector>
+#include <tuple>
 using namespace std;
 
 // Defining the MinHeap class
-// Note: This MinHeap is indexed from 1 (as mentioned in section) 
+// Note: This MinHeap is indexed from 1
 class MinHeap {
 public:
-    vector<double> heap;
+    vector<pair<int, double>> heap; // Using pair instead of tuple for simplicity
 
     // ----- Constructors -----
-    // Default 
+    // Default
     MinHeap() {
         // Inserting dummy value at index 0 to make indexing from 1
-        heap.push_back(0);
+        heap.push_back(make_pair(0, 0.0)); // dummy value
     }
-    // With vector
-    MinHeap(vector<double> &vec) {
-        heap.push_back(0); // dummy value
-        for (double val : vec) {
+    // With vector of pairs
+    MinHeap(vector<pair<int, double>> &vec) {
+        heap.push_back(make_pair(0, 0.0)); // dummy value
+        for (auto &val : vec) {
             heap.push_back(val);
         }
         buildMinHeap();
     }
 
     // ----- Member Functions -----
-    int size(); 
+    int size();
     void minHeapify(int);
-    void buildMinHeap(); 
-    double deleteMin();
-    void insert(int);
+    void buildMinHeap();
+    int deleteMin();
+    void insert(pair<int, double>);
 };
 
-
 // Size of the heap
-int MinHeap::size() { return heap.size() - 1; };
+int MinHeap::size() { return heap.size() - 1; }
 
 // Heapify function
-// Note: i is the index of the node we are heapifying 
-void MinHeap::minHeapify(int i){
+void MinHeap::minHeapify(int i) {
     int left = 2 * i;
     int right = 2 * i + 1;
     int smallest = i;
 
-    if (left && heap[left] < heap[i])
+    if (left <= size() && heap[left].second < heap[i].second)
         smallest = left;
-    else
-        smallest = i;
-    if (right && heap[right] < heap[smallest])
+    if (right <= size() && heap[right].second < heap[smallest].second)
         smallest = right;
-    if (smallest != i){
+    if (smallest != i) {
         swap(heap[i], heap[smallest]);
         minHeapify(smallest);
     }
@@ -60,17 +57,20 @@ void MinHeap::buildMinHeap() {
     }
 }
 
-double MinHeap::deleteMin() {
-    double min = heap[1];
+int MinHeap::deleteMin() {
+    pair<int, double> min = heap[1];
     heap[1] = heap[size()];
     heap.pop_back();
     minHeapify(1);
-    return min;
+    return min.first; // Return the vertex index
 }
 
-// MAY NEED TO FIX THIS FUNCTION TO MAKE SURE THAT WE ARE INDEXING FROM 1
-void MinHeap::insert(int v) {
+void MinHeap::insert(pair<int, double> v) {
     heap.push_back(v);
     int i = heap.size() - 1;
-    heap[i] = v;
+
+    while (i > 1 && heap[i / 2].second > heap[i].second) {
+        swap(heap[i], heap[i / 2]);
+        i = i / 2;
+    }
 }

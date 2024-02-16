@@ -18,7 +18,7 @@ class MinHeap {
         int size() {return heap.size();}
         void minHeapify(int i);
         void buildMinHeap();
-        void insert(double n);
+        void insert(pair<int, double> v);
         double deleteMin();
 };
 

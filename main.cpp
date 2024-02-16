@@ -20,6 +20,7 @@ double avg(vector<vector<double>> RC, int n, int d) {
         sum += Prims(randomCoords(n, d));
     }
     return sum / n;
+    std::cout << "The average weight of the MST is: " << sum / n << std::endl;
 }
 
 
