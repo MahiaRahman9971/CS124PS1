@@ -7,8 +7,8 @@ using namespace std;
 // Defining a function that generates random coordinates in the form of a vector containing n vectors
 // input: number of vertices, number of dimensions
 // output: list of tuple coordinates
-vector<vector<double>> randomCoords(int n, int d) {
-    vector<vector<double>> tuples;
+vector<vector<double> > randomCoords(int n, int d) {
+    vector<vector<double> > tuples;
 
     // Generating random numbers from 0 to 1
     // Citation: https://stackoverflow.com/questions/48716109/generating-a-random-number-between-0-1-c

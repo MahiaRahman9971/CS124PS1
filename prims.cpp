@@ -1,61 +1,97 @@
 #include <iostream>
+#include <vector>
 #include <random>
-#include "helpers.h"
+#include "heap.cpp"
 
 using namespace std;
 
 vector<int> distance; 
 vector<int> prev;
-int totalWeight = 0;
+const int INF = numeric_limits<int>::max();
 
 // Function to calculate the minimum spanning tree using Prim's algorithm
 // input: list of tuples of coordinates
 // output: total weight of the MST for the given graph
 double Prims(vector<vector<double>> RC) {
-        int size = RC.size();
+    // Printing RC 
+    cout << "RC contents:" << endl;
+    for(int i = 0; i < RC.size(); ++i) {
+        for(int j = 0; j < RC[i].size(); ++j) {
+            std::cout << RC[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
 
-        // Initializing vectors
-        // Setting all elements of d to infinity 
-        vector<int> d(size, numeric_limits<int>::max());
-        vector<int> s(size);
-        vector<int> prev(size);
-        MinHeap h;
+    int numVertices = RC.size();
+    // print numVertices
+    cout << "numVertices: " << numVertices << endl;
 
-        // Starting our MST from the first vertex
-        d[0] = 0;
-        //we don't really need null, and it causing issues with int being set to null
-        // we can solve by making prev a vector of pointers but we don't need to know prevs
-        // prev[0] = NULL;
-        h.insert({0, 0.0});
+    double totalWeight = 0; 
 
+    // Initializing vectors
+    // Setting all elements of d to infinity 
+    vector<double> dist(numVertices, INF);
+    vector<double> stack(numVertices);
+    vector<double> prev(numVertices, false);
+    MinHeap heap(numVertices);
 
-        while (h.size() != 0) {
-            // u is the index of the vertex with the smallest distance
-            // CONFUSED ABOUT HOW TO TAKE CARE OF U, WE INSERT TUPLES INTO OUR HEAP??
-            // SO DELETEMIN MUST RETURN WHAT?? 
-            int u = h.deleteMin();
-            s.push_back(u);
+    // Starting our MST from the first vertex
+    dist[0] = 0;
+    heap.insertValue(0, 0);
 
-            // For every vertex in our graph
-            for (int u = 0; u < size; u++) {
-                // For every vertex after u in our graph
-                for (int v = u + 1; v < size - 1; v++) {
-                    // If v not in s
-                    if (find(s.begin(), s.end(), v) == s.end()) {
-                        int weight = computeEC(RC[u], RC[v]);
-                        if (d[v] > weight) {
-                            d[v] = weight;
-                            // prev[v] = u;
-                            h.insert({v, d[v]});
-                        };
-                    }
+    // Printing the contents of d
+    cout << "dist contents:" << endl;
+    for(int i = 0; i < dist.size(); ++i) {
+        if(dist[i] == std::numeric_limits<int>::max()) {
+            std::cout << "inf ";
+        } else {
+            std::cout << dist[i] << " ";
+        }
+    }
+
+    while (heap.heapSize() != 0) {
+        cout << "hello" << endl;
+        int u = heap.deleteMin();
+        heap.printHeap();
+        stack.push_back(u);
+
+        if (stack[u]) continue;
+        stack[u] = true;
+
+        // For every vertex in our graph
+        for (int u = 0; u < numVertices; u++) {
+            // For every vertex after u in our graph
+            for (int v = u + 1; v < numVertices; v++) {
+                // If v not in s
+                double weight = computeEC(RC[u], RC[v]);
+                cout << "u: " << u << endl;
+                cout << "v: " << v << endl;
+                cout << "weight: " << weight << endl;
+                if (!stack[v] && dist[v] > weight) {
+                    if (dist[v] > weight) {
+                        dist[v] = weight;
+                        prev[v] = u;
+                        heap.insertValue(v, dist[v]);
+                        heap.printHeap();
+                    };
                 }
             }
-
-            // Calculate the total weight of the MST
-            for (int i = 0; i < size; i++) {
-                totalWeight += d[i];
-            }  
         }
-        return totalWeight;
+
+        // Printing the contents of d
+        cout << "dist contents:" << endl;
+        for(int i = 0; i < dist.size(); ++i) {
+            if(dist[i] == std::numeric_limits<int>::max()) {
+                std::cout << "inf ";
+            } else {
+                std::cout << dist[i] << " ";
+            }
+        };
     }
+
+    // Calculate the total weight of the MST
+    for (int i = 0; i < dist.size(); i++) {
+        totalWeight += dist[i];
+    }  
+    return totalWeight;
+}
