@@ -1,11 +1,10 @@
 #include <iostream>
 #include <climits>
-#include "helpers.h"
 
 using namespace std;
 
 class MinHeap {
-   pair<int, double> *heap;
+   pair<int, float> *heap;
    int max_size;
    int heap_size;
 
@@ -14,7 +13,7 @@ public:
        this->heap_size = 0;
        this->max_size = max_size;
        // Allocate memory for 1 extra element as we start indexing from 1
-       this->heap = new pair<int, double>[max_size + 1];
+       this->heap = new pair<int, float>[max_size + 1];
    }
 
    int heapSize() {
@@ -47,7 +46,7 @@ public:
        if (heap_size < 1)
            return INT_MAX;
       
-       pair<int, double> min = heap[1]; // Adjust for 1-based indexing
+       pair<int, float> min = heap[1]; // Adjust for 1-based indexing
        heap[1] = heap[heap_size];
        heap_size--;
        minHeapify(1);
@@ -55,7 +54,7 @@ public:
        return min.first; // Return the vertex index
    }
 
-   void insertValue(int k, double v) {
+   void insertValue(int k, float v) {
        if (heap_size == max_size) {
            cout << "\nOverflow: Could not insertValue\n";
            return;
@@ -63,7 +62,7 @@ public:
 
        heap_size++;
        int i = heap_size;
-       heap[i] = pair<int, double>(k, v);
+       heap[i] = pair<int, float>(k, v);
 
        while (i > 1 && heap[i / 2].second > heap[i].second) {
            swap(heap[i], heap[i / 2]);
