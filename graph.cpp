@@ -58,3 +58,16 @@ void printGraph(const vector<pair<pair<int, int>, float>>& graph) {
         cout << get<0>(get<0>(edge)) << " " << get<1>(get<0>(edge)) << " " << get<1>(edge) << endl;
     }
 }
+
+// Get the highest edge weight from the graph
+// input: dimension, graph
+// output: highest edge weight
+float highestEdgeWeight(int n, vector<pair<pair<int, int>, float>> graph) {
+    float max = 0;
+    for (int i = 0; i < n; i++) {
+        if (get<1>(graph[i]) > max) {
+            max = get<1>(graph[i]);
+        }
+    }
+    return max;
+}

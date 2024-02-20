@@ -31,15 +31,3 @@ using namespace std;
 //    return sum / n;
   
 // }
-
-
-// Errors:
-// 1. heap class in helpers.h not being recognized in other files due to linker error
-
-
-// To do's:
-// 1. Fix the insert function in heap.cpp
-// 2. Figure out what heap takes in, tuple or no?
-// 3. Do graph 1
-// 4. Plot values
-// 5. Give simple function that describes plot behavior

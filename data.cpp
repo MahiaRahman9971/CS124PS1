@@ -5,15 +5,15 @@
 
 using namespace std;
 
-// Function for generating points (number of nodes, mst weight)
-// input: number of dimensions
-// output: list of pairs of points
-vector<pair<int, float>> generatePoints(int d) {
+// Function for generating points   
+// input: number of dimensions, maximum number of nodes
+// output: list of points (number of nodes, highest edge weight from the graph)
+vector<pair<int, float>> generatePoints(int d, int maxNodes) {
     vector<pair<int, float>> points;
-    for (int i = 1; i <= 1000; i+=10) {
+    for (int i = 2; i < maxNodes; i+= 10) {
         vector<vector<float>> RC = randomCoords(i, d);
         vector<pair<pair<int, int>, float>> graph = generateGraph(RC);
-        float weight = kruskalMST(i, graph);
+        float weight = highestEdgeWeight(i, graph);
         points.push_back(make_pair(i, weight));
     }
     return points;
@@ -26,9 +26,4 @@ void printPoints(const vector<pair<int, float>>& points) {
     for (const auto& point : points) {
         cout << point.first << " " << point.second << endl;
     }
-}
-
-int main() {
-    printPoints(generatePoints(2));
-    return 0;
 }
