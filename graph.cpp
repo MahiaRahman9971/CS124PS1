@@ -60,13 +60,13 @@ void printGraph(const vector<pair<pair<int, int>, float>>& graph) {
 }
 
 // Get the highest edge weight from the graph
-// input: dimension, graph
+// input: list of edges
 // output: highest edge weight
-float highestEdgeWeight(int n, vector<pair<pair<int, int>, float>> graph) {
+float highestEdgeWeight(vector<float> edgeList) {
     float max = 0;
-    for (int i = 0; i < n; i++) {
-        if (get<1>(graph[i]) > max) {
-            max = get<1>(graph[i]);
+    for (const auto& edge : edgeList) {
+        if (edge > max) {
+            max = edge;
         }
     }
     return max;

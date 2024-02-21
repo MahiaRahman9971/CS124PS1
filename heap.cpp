@@ -79,3 +79,21 @@ public:
        cout << endl;
    }
 };
+
+int main() {
+   MinHeap minHeap(10);
+   minHeap.insertValue(1, 10);
+   minHeap.insertValue(2, 20);
+   minHeap.insertValue(3, 30);
+   minHeap.insertValue(4, 40);
+   minHeap.insertValue(5, 50);
+   minHeap.insertValue(6, 60);
+   minHeap.insertValue(7, 70);
+   minHeap.insertValue(8, 80);
+   minHeap.insertValue(9, 90);
+   minHeap.insertValue(10, 100);
+   minHeap.printHeap();
+   cout << "The Min val is " << minHeap.deleteMin() << endl;
+   minHeap.printHeap();
+   return 0;
+}

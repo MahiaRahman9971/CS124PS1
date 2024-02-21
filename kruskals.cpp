@@ -4,6 +4,7 @@
 #include <cmath>
 #include <random>
 #include "graph.cpp"
+#include "edge_pruning.cpp"
 using namespace std;
 
 // Disjoint set data structure
@@ -32,10 +33,9 @@ public:
    int link(int x, int y) {
        if (rank[x] > rank[y]) {
            return link(y, x);
-       } else {
-           if (rank[x] == rank[y]) {
-               rank[y]++;
-           }
+       } 
+       else if (rank[x] == rank[y]) {
+            rank[y]++;
        }
        parent[x] = y;
        return y;
@@ -43,37 +43,32 @@ public:
 };
 
 // Kruskal's algorithm to find MST
-// input: number of vertices, graph
-// output: weight of the MST
-float kruskalMST(int n, vector<pair<pair<int, int>, float>>& graph) {
-   sort(graph.begin(), graph.end(), [](const pair<pair<int, int>, float>& a, const pair<pair<int, int>, float>& b) {
-       return a.second < b.second;
-   });
+// input: number of vertices, dimensions, graph
+// output: list of MST edge weights
+vector<float> kruskalMST(int n, int d, vector<pair<pair<int, int>, float>>& graph) {
 
-   DisjointSet ds(n);
-   float MSTweight = 0.0;
-   for (const auto& edge : graph) {
-       int u = edge.first.first;
-       int v = edge.first.second;
-       float w = edge.second;
-       if (ds.find(u) != ds.find(v)) {
-           MSTweight += w;
-           ds.unite(u, v);
-       }
-   }
-   return MSTweight;
+    // Prune the graph
+    float t = threshold(n, d);
+    vector<float> newGraph;
+    for (const auto& edge : graph) {
+        if (edge.second < t) {
+            newGraph.push_back(edge.second);
+        }
+    }
+
+    // Sort the new graph
+    sort(newGraph.begin(), newGraph.end());
+
+    DisjointSet ds(n);
+    vector<float> mst;
+    for (const auto& edge : graph) {
+        int u = edge.first.first;
+        int v = edge.first.second;
+        float weight = edge.second;
+        if (ds.find(u) != ds.find(v)) {
+            ds.unite(u, v);
+            mst.push_back(weight);
+        }
+    }
+    return mst;
 }
-
-// int main() {
-//     int n = 5;  // Number of vertices
-//     int d = 2;  // Number of dimensions
-//     // vector<vector<float>> RC = randomCoords(n, d);
-//     vector<vector<float>> RC = {{0.4603, 0.44525},{0.591422, 0.80881}, {0.516874, 0.039684}, {0.768217, 0.660744}};
-//     vector<pair<pair<int, int>, float>> graph = generateGraph(RC);
-
-//     // Apply Kruskal's algorithm
-//     float weight = kruskalMST(n, graph);
-//     cout << weight << endl;
-
-//     return 0;
-// }
