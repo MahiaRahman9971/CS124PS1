@@ -9,17 +9,17 @@ using namespace std;
 // input: number of vertices, number of dimensions
 // output: list of coordinates
 vector<vector<float>> randomCoords(int n, int d) {
-    vector<vector<float>> coords;
+    vector<vector<float>> coords(n);
     random_device rd;
     mt19937 gen(rd());
     uniform_real_distribution<> dis(0.0, 1.0);
 
     for (int i = 0; i < n; i++) {
-        vector<float> coord;
+        vector<float> coord(d);
         for (int j = 0; j < d; j++) {
-            coord.push_back(dis(gen));
+            coord[j] = dis(gen);
         }
-        coords.push_back(coord);
+        coords[i] = coord;
     }
     return coords;
 }
