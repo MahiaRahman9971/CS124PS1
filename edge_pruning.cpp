@@ -4,6 +4,20 @@
 #include <cmath>
 using namespace std;
 
+
+// Get the highest edge weight from the graph
+// input: list of edges
+// output: highest edge weight
+float highestEdgeWeight(vector<float> edgeList) {
+    float max = 0;
+    for (const auto& edge : edgeList) {
+        if (edge > max) {
+            max = edge;
+        }
+    }
+    return max;
+}
+
 // function for determining threshold 
 // input: number of nodes, dimensions
 // output: threshold

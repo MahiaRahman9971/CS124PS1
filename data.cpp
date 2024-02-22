@@ -13,7 +13,7 @@ vector<pair<int, float>> generatePointsEdgePruning(int d, int maxNodes) {
     for (int i = 2; i < maxNodes; i+= 10) {
         vector<vector<float>> RC = randomCoords(i, d);
         vector<pair<pair<int, int>, float>> graph = generateGraph(RC);
-        vector<float> MST = kruskalMST(i, d, graph);
+        vector<float> MST = kruskal(i, d, graph);
         float weight = highestEdgeWeight(MST);
         points.push_back(make_pair(i, weight));
     }
@@ -37,8 +37,8 @@ float averageMST(int g, int d, int n) {
     for (int i = 0; i < g; i++) {
         vector<vector<float>> RC = randomCoords(n, d);
         vector<pair<pair<int, int>, float>> graph = generateGraph(RC);
-        vector<float> MST = kruskalMST(n, d, graph);
-        
+        vector<float> MST = kruskal(n, d, graph);
+
         for (int i = 0; i < MST.size(); i++) {
             mstWeight += MST[i];
         };
@@ -59,5 +59,5 @@ vector<pair<int, float>> generatePointsAvgMST(int d, int maxNodes) {
 
 int main(int argc, char const *argv[])
 {
-    printPoints(generatePointsAvgMST(2, 1000));
+    printPoints(generatePointsAvgMST(2, 100));
 }

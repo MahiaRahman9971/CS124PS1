@@ -5,7 +5,7 @@
 #include <cmath> 
 using namespace std;
 
-// Defining a function that generates random coordinates in the form of a vector containing n vectors
+// Defining a function that generates random coordinates representing vertices 
 // input: number of vertices, number of dimensions
 // output: list of coordinates
 vector<vector<float>> randomCoords(int n, int d) {
@@ -42,9 +42,9 @@ vector<pair<pair<int, int>, float>> generateGraph(const vector<vector<float>>& R
     vector<pair<pair<int, int>, float>> graph;
     for (int i = 0; i < RC.size(); i++) {
         for (int j = i + 1; j < RC.size(); j++) {
-            float distance = computeEC(RC[i], RC[j]);
-            pair<int, int> edge = make_pair(i, j);
-            graph.push_back(make_pair(edge, distance));
+            float edge = computeEC(RC[i], RC[j]);
+            pair<int, int> vertices = make_pair(i, j);
+            graph.push_back(make_pair(vertices, edge));
         }
     }
     return graph;
@@ -59,15 +59,3 @@ void printGraph(const vector<pair<pair<int, int>, float>>& graph) {
     }
 }
 
-// Get the highest edge weight from the graph
-// input: list of edges
-// output: highest edge weight
-float highestEdgeWeight(vector<float> edgeList) {
-    float max = 0;
-    for (const auto& edge : edgeList) {
-        if (edge > max) {
-            max = edge;
-        }
-    }
-    return max;
-}
