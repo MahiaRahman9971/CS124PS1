@@ -6,12 +6,12 @@
 using namespace std;
 
 
-int main() {
+// int main() {
    
-}
+// }
 
 // To do:
-// 1. 0d/1d points 
+// 1. 0d/1d points - get rid of funciton 
 // 2. check over all functions, make sure they are programmed optimally 
 // 3. look over the rubric 
 // 4. plot points  
