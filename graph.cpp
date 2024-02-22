@@ -24,6 +24,28 @@ vector<vector<float>> randomCoords(int n, int d) {
     return coords;
 }
 
+
+// Defining a function that generates random weights chosen uniformly at random on [0, 1] as in the form of a vector containing n vectors
+// input: number of vertices
+// output: adj list of graph with random weights
+vector<pair<pair<int, int>, float> > RandWeightGraph(int n) {
+    vector<pair<pair<int, int>, float> > graph(n);
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_real_distribution<> dis(0.0, 1.0);
+
+    // Generate edges with random weights for every pair of vertices
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            float weight = dis(gen);
+            // Add edge with vertices (i, j) and random weight
+            graph.push_back(make_pair(make_pair(i, j), weight));
+        }
+    }
+    return graph;
+}
+
+
 // Defining a function that calculates the distance between two points
 // input: (coord1, coord2) - two vectors of coordinates
 // output: Euclidean distance between each two points
