@@ -25,6 +25,19 @@ vector<pair<pair<int, int>, float> > RandWeightGraph(int n) {
     return graph;
 }
 
+float threshold(int n, int d) {
+    if (d == 2) {
+        return 0.260 * exp(-0.005 * n) + 0.038;
+    }
+    else if (d == 3) {
+        return 0.241 * exp(-0.002 * n) + 0.103;
+    }
+    else if (d == 4) {
+        return 0.250 * exp(-0.001 * n) + 0.184;
+    }
+    else return 0;
+}
+
 // Defining a function that generates random coordinates representing vertices 
 // input: number of vertices, number of dimensions
 // output: list of coordinates
@@ -66,7 +79,10 @@ vector<pair<pair<int, int>, float>> generateGraph(int n, int d) {
         for (int j = i + 1; j < RC.size(); j++) {
             pair<int, int> vertices = make_pair(i, j);
             float edge = computeEC(RC[i], RC[j]);
-            graph.push_back(make_pair(vertices, edge));
+            if (edge < threshold(n, d)){
+                graph.push_back(make_pair(vertices, edge));
+            }
+            
         }
     }
     return graph;

@@ -51,26 +51,12 @@ public:
 // output: list of MST edge weights
 vector<float> kruskal(int n, int d, vector<pair<pair<int, int>, float>>& graph) {
 
-    // Prune the graph
-    // float t = threshold(n, d);
-    // float t = 100;
-    // vector<pair<pair<int, int>, float>> prunedGraph;
-    // for (const auto& edge : graph) {
-    //     if (edge.second < t) {
-    //         prunedGraph.push_back(edge);
-    //     }
-    // }
-
     vector<float> X;
     DisjointSet ds(n);
     for (int i = 0; i < n; i++) {
         ds.makeSet(i);
     }
 
-    // Sort the new graph
-    // sort(prunedGraph.begin(), prunedGraph.end(), [](const pair<pair<int, int>, float>& a, const pair<pair<int, int>, float>& b) {
-    //     return a.second < b.second;
-    // });
 
     sort(graph.begin(), graph.end(), [](const pair<pair<int, int>, float>& a, const pair<pair<int, int>, float>& b) {
         return a.second < b.second;
