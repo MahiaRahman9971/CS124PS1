@@ -5,6 +5,10 @@
 #include <cmath> 
 using namespace std;
 
+random_device rd;
+mt19937 gen(rd());
+uniform_real_distribution<> dis(0.0, 1.0);
+
 float threshold(int n, int d) {
     if (d == 0) {
         return 0.163 * exp(-0.009 * n) + 0.024;
@@ -21,39 +25,11 @@ float threshold(int n, int d) {
     else return 0;
 }
 
-// Defining a function that generates random weights chosen uniformly at random on [0, 1] 
-// input: number of vertices
-// output: adj list of graph with random weights
-vector<pair<pair<int, int>, float> > RandWeightGraph(int n) {
-    vector<pair<pair<int, int>, float> > graph(n);
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_real_distribution<> dis(0.0, 1.0);
-
-    // Generate edges with random weights for every pair of vertices
-    for (int i = 0; i < n; ++i) {
-        for (int j = i + 1; j < n; ++j) {
-            float weight = dis(gen);
-            if (weight < threshold(n, 0)){
-                graph.push_back(make_pair(make_pair(i, j), weight));
-            }
-            // Add edge with vertices (i, j) and random weight
-           
-        }
-    }
-    return graph;
-}
-
-
-
 // Defining a function that generates random coordinates representing vertices 
 // input: number of vertices, number of dimensions
 // output: list of coordinates
 vector<vector<float>> randomCoords(int n, int d) {
     vector<vector<float>> coords(n);
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_real_distribution<> dis(0.0, 1.0);
 
     for (int i = 0; i < n; i++) {
         vector<float> coord(d);
@@ -64,7 +40,6 @@ vector<vector<float>> randomCoords(int n, int d) {
     }
     return coords;
 }
-
 
 // Defining a function that calculates the distance between two points
 // input: (coord1, coord2) - two vectors of coordinates
@@ -83,10 +58,16 @@ float computeEC(const vector<float>& coord1, const vector<float>& coord2) {
 vector<pair<pair<int, int>, float>> generateGraph(int n, int d) {
     vector<vector<float>> RC = randomCoords(n, d);
     vector<pair<pair<int, int>, float>> graph(n);
+    float edge;
     for (int i = 0; i < RC.size(); i++) {
         for (int j = i + 1; j < RC.size(); j++) {
             pair<int, int> vertices = make_pair(i, j);
-            float edge = computeEC(RC[i], RC[j]);
+            if (d == 0){
+                edge = dis(gen);
+            }
+            else {
+                edge = computeEC(RC[i], RC[j]);
+            }
             if (edge < threshold(n, d)){
                 graph.push_back(make_pair(vertices, edge));
             }

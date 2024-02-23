@@ -12,16 +12,8 @@ float averageMST(int g, int d, int n) {
     float mstWeight = 0;
     for (int i = 0; i < g; i++) {
         vector<pair<pair<int, int>, float>> graph(n);
-        if(d == 0){
-            graph = RandWeightGraph(n);
-            
-        }
-        else{
-            graph = generateGraph(n, d);
-        }
+        graph = generateGraph(n, d);
         vector<float> MST = kruskal(n, d, graph);
-
-        
         for (int i = 0; i < MST.size(); i++) {
             mstWeight += MST[i];
         };
