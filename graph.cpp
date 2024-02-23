@@ -5,6 +5,22 @@
 #include <cmath> 
 using namespace std;
 
+float threshold(int n, int d) {
+    if (d == 0) {
+        return 0.163 * exp(-0.009 * n) + 0.024;
+    }
+    else if (d == 2) {
+        return 0.260 * exp(-0.005 * n) + 0.098;
+    }
+    else if (d == 3) {
+        return 0.241 * exp(-0.002 * n) + 0.183;
+    }
+    else if (d == 4) {
+        return 0.250 * exp(-0.001 * n) + 0.264;
+    }
+    else return 0;
+}
+
 // Defining a function that generates random weights chosen uniformly at random on [0, 1] 
 // input: number of vertices
 // output: adj list of graph with random weights
@@ -18,25 +34,17 @@ vector<pair<pair<int, int>, float> > RandWeightGraph(int n) {
     for (int i = 0; i < n; ++i) {
         for (int j = i + 1; j < n; ++j) {
             float weight = dis(gen);
+            if (weight < threshold(n, 0)){
+                graph.push_back(make_pair(make_pair(i, j), weight));
+            }
             // Add edge with vertices (i, j) and random weight
-            graph.push_back(make_pair(make_pair(i, j), weight));
+           
         }
     }
     return graph;
 }
 
-float threshold(int n, int d) {
-    if (d == 2) {
-        return 0.260 * exp(-0.005 * n) + 0.038;
-    }
-    else if (d == 3) {
-        return 0.241 * exp(-0.002 * n) + 0.103;
-    }
-    else if (d == 4) {
-        return 0.250 * exp(-0.001 * n) + 0.184;
-    }
-    else return 0;
-}
+
 
 // Defining a function that generates random coordinates representing vertices 
 // input: number of vertices, number of dimensions

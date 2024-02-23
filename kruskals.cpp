@@ -23,12 +23,19 @@ public:
         rank[x] = 0;
     }
 
-   int find(int x) {
-       if (x != parent[x]) {
-           parent[x] = find(parent[x]); 
-       }
-       return parent[x];
-   }
+    int find(int x) {
+        int root = x;
+        while (root != parent[root]) {
+            root = parent[root];
+        }
+
+        while (x != root) {
+            int next = parent[x];
+            parent[x] = root;
+            x = next;
+        }
+        return root;
+    }
 
    void unite(int x, int y) {
        link(find(x), find(y));
