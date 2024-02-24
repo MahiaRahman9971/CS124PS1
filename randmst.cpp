@@ -5,7 +5,7 @@
 
 using namespace std;
 
-// function for calculating average MST edge weights
+// Calculate average MST edge weights
 // input: number of graphs, number of dimensions, number of nodes
 // output: average MST edge weights
 float averageMST(int g, int d, int n) {
@@ -21,10 +21,10 @@ float averageMST(int g, int d, int n) {
     return mstWeight/g;
 }
 
-// function for generating points: (numbr of nodes, average mst weight)
+// Generate points: (number of nodes, average mst weight)
 // input: number of dimensions, maximum number of nodes
 // output: list of points
-vector<pair<int, float>> generatePointsAvgMST(int d, int maxNodes) {
+vector<pair<int, float>> generatePointsAvgMST(int maxNodes) {
     vector<pair<int, float>> points;
     for (int i = 2; i < maxNodes; i+= 10) {
         points.push_back(make_pair(i, averageMST(1, 2, 1000)));
@@ -32,12 +32,9 @@ vector<pair<int, float>> generatePointsAvgMST(int d, int maxNodes) {
     return points;
 }
 
-
-//usage: /randmst 0 numpoints numtrials dimension
-//output: average numpoints numtrials dimension
-int main(int argc, char const *argv[])
-{
-
+// usage: ./randmst 0 numpoints numtrials dimension
+// usage: ./randmst 1
+int main(int argc, char const *argv[]) {
     int default_0 = std::stoi(argv[1]);
     int numpoints = std::stoi(argv[2]);
     int numtrials = std::stoi(argv[3]);

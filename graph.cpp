@@ -76,13 +76,3 @@ vector<pair<pair<int, int>, float>> generateGraph(int n, int d) {
     }
     return graph;
 }
-
-// Print graph
-// input: graph 
-// output: none
-void printGraph(const vector<pair<pair<int, int>, float>>& graph) {
-    for (const auto& edge : graph) {
-        cout << get<0>(get<0>(edge)) << " " << get<1>(get<0>(edge)) << " " << get<1>(edge) << endl;
-    }
-}
-

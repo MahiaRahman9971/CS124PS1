@@ -57,13 +57,11 @@ public:
 // input: number of vertices, dimensions, graph
 // output: list of MST edge weights
 vector<float> kruskal(int n, int d, vector<pair<pair<int, int>, float>>& graph) {
-
     vector<float> X;
     DisjointSet ds(n);
     for (int i = 0; i < n; i++) {
         ds.makeSet(i);
     }
-
 
     sort(graph.begin(), graph.end(), [](const pair<pair<int, int>, float>& a, const pair<pair<int, int>, float>& b) {
         return a.second < b.second;
