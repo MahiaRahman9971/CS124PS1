@@ -71,7 +71,6 @@ vector<pair<pair<int, int>, float>> generateGraph(int n, int d) {
             if (edge < threshold(n, d)){
                 graph.push_back(make_pair(vertices, edge));
             }
-            
         }
     }
     return graph;

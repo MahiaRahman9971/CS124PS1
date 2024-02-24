@@ -21,17 +21,6 @@ float averageMST(int g, int d, int n) {
     return mstWeight/g;
 }
 
-// Generate points: (number of nodes, average mst weight)
-// input: number of dimensions, maximum number of nodes
-// output: list of points
-vector<pair<int, float>> generatePointsAvgMST(int maxNodes) {
-    vector<pair<int, float>> points;
-    for (int i = 2; i < maxNodes; i+= 10) {
-        points.push_back(make_pair(i, averageMST(1, 2, 1000)));
-    }
-    return points;
-}
-
 // usage: ./randmst 0 numpoints numtrials dimension
 // usage: ./randmst 1
 int main(int argc, char const *argv[]) {
@@ -44,7 +33,7 @@ int main(int argc, char const *argv[]) {
         std::cout << averageMST(numtrials, dimension, numpoints) << " " << numpoints << " " << numtrials << " " << dimension << std::endl;
         return 0;
     }
-    else{
+    else {
         std::vector<int> n = {128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144};
 
         for(int num : n) {
